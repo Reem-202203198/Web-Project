@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineFan - Home</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="logo">
+            <i class="fa-solid fa-clapperboard"></i>
+            <span>CineFan</span>
+        </div>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search movies, series, users..." />
+        </div>
+        <nav class="top-nav">
+            <a href="index.html" class="active">Home</a>
+            <a href="explore.html">Explore</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="#">Notifications</a>
+        </nav>
+        <div class="profile-mini">
+            <img src="https://allprodad.com/wp-content/uploads/2021/03/05-12-21-happy-people.jpg"alt="profile">
+        </div>
+    </header>
+    <div class="layout">
+        <aside class="left-sidebar">
+            <h3>Menu</h3>
+            <ul>
+                <li class="active"><i class="fa-solid fa-fire"></i> Top Feed</li>
+                <li><i class="fa-regular fa-clock"></i> Recent</li>
+                <li><i class="fa-regular fa-bookmark"></i> Saved Posts</li>
+            </ul>
+            <h3>Genres</h3>
+            <ul>
+                <li>Action & Adventure</li>
+                <li>Sci-Fi & Fantasy</li>
+                <li>K-Drama</li>
+                <li>Mystery & Thriller</li>
+                <li>Comedy</li>
+                <li>Romance</li>
+            </ul>
+        </aside>
+        <main class="main-feed">
+            <section class="create-post card">
+                <div class="create-top">
+                    <img src="https://miro.medium.com/v2/resize:fit:1400/1*fILLAY3bvO6ioqHsvflGtQ.jpeg" class="avatar" alt="user">
+                    <input type="text" placeholder="What's your latest watch? Drop a review or recommendation..." />
+                </div>
+                <div class="create-bottom">
+                    <div class="actions">
+                        <span><i class="fa-regular fa-image"></i> Photo/Poster</span>
+                        <span><i class="fa-regular fa-rectangle-list"></i> Tag Movie</span>
+                    </div>
+                    <button>Post</button>
+                </div>
+            </section>
+            <article class="post card">
+                <div class="post-header">
+                    <div class="user-info">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMUDp3aV5EOTHgkQp6AB782rSKOyhhkdkx8Q&s" class="avatar" alt="Alex">
+                        <div>
+                            <h4>Alex Cinematic</h4>
+                            <p>@alex_reviews • 2h ago</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <span class="tag">Movie Review</span>
+                <p>
+                    Just watched a great movie today. The ending was unforgettable.
+                    The cinematography in the third act completely blew me away.
+                    Hans Zimmer's score elevated every single frame. A true masterpiece of modern sci-fi.
+                </p>
+                <img class="post-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqKPBmxP68XLylAN2KSIb4z5pNLklPg5darw&s" alt="movie scene">
+                <div class="post-footer">
+                    <span><i class="fa-regular fa-heart"></i> 1.2k</span>
+                    <span><i class="fa-regular fa-comment"></i> 84</span>
+                    <span><i class="fa-regular fa-bookmark"></i></span>
+                </div>
+            </article>
+            <article class="post card">
+                <div class="post-header">
+                    <div class="user-info">
+                        <img src="https://i.pinimg.com/236x/08/03/1a/08031a2aac35f853d35cfaf423c08d76.jpg" class="avatar" alt="Ji-Yeon">
+                        <div>
+                            <h4>Ji-Yeon Kim</h4>
+                            <p>5 hours ago</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <span class="tag">Series Recommendation</span>
+                <p>
+                    This series is perfect for anyone who loves mystery and suspense.
+                    The character development in the second half of the season is insane.
+                    Don’t let the slow burn fool you — it picks up incredibly fast.
+                </p>
+                <div class="post-footer">
+                    <span><i class="fa-regular fa-heart"></i> 842</span>
+                    <span><i class="fa-regular fa-comment"></i> 56</span>
+                    <span><i class="fa-regular fa-bookmark"></i></span>
+                </div>
+            </article>
+        </main>
+        <aside class="right-sidebar">
+            <section class="card widget">
+                <h3>Trending Movies & Series</h3>
+                <div class="trend-item">
+                    <img src="https://artofthemovies.co.uk/cdn/shop/products/event_horizon_EB03528_B-843724_02108720-b14f-4f73-b169-147dccbc08f1-416599.jpg?v=1613508099" alt="">
+                    <div>
+                        <h4>Neon Horizon</h4>
+                        <p>Sci-Fi • 2024</p>
+                        <span> 8.7</span>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMmRlODA2ZTctMTMwZS00NTQ2LWFkNmYtNjA1ZmRkY2RiMzdmXkEyXkFqcGc@._V1_.jpg" alt="">
+                    <div>
+                        <h4>Silent Echoes</h4>
+                        <p>K-Drama • Series</p>
+                        <span> 9.1</span>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <img src="https://m.media-amazon.com/images/M/MV5BNWQ5ZGQ1NWEtYmI0MS00YmJiLWI0ZGMtOGM4MWRkYTljMzgyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="">
+                    <div>
+                        <h4>The Last Stand</h4>
+                        <p>Action • 2023</p>
+                        <span> 7.5</span>
+                    </div>
+                </div>
+            </section>
+            <section class="card widget">
+                <h3>Suggested Reviewers</h3>
+                <div class="reviewer">
+                    <div class="user-info">
+                        <img src="https://img.freepik.com/free-photo/young-beautiful-girl-posing-black-leather-jacket-park_1153-8104.jpg?semt=ais_hybrid&w=740&q=80" alt="">
+                        <div>
+                            <h4>Maria G.</h4>
+                            <p>Horror Expert</p>
+                        </div>
+                    </div>
+                    <button>Follow</button>
+                </div>
+                <div class="reviewer">
+                    <div class="user-info">
+                        <img src="https://media.gq.com/photos/559307287cc23bc8642429bf/16:9/w_2560%2Cc_limit/hemsworth.jpg" alt="">
+                        <div>
+                            <h4>James Wright</h4>
+                            <p>Indie Films</p>
+                        </div>
+                    </div>
+                    <button>Follow</button>
+                </div>
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
