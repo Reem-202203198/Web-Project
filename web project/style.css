@@ -103,3 +103,136 @@ body{
 }
 
 /* Profile */
+.app-body{
+    background: var(--bg-main);
+    color: white;
+}
+.auth-layout{
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: o 15px;
+}
+.topbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #111;
+    border-bottom: 1px solid var(--border);
+}
+.logo-text{
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 20px;
+}
+.search-bar input{
+    padding: 8px 12px;
+    width: 250px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: white;
+}
+.nav-tabs a{
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+.nav-tabs a:hover{
+    color: var(--primary);
+}
+.top-avatar img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.profile-card{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.profile-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile-left{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.profile-big-avatar img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.username{
+    color: var(--text-muted);
+}
+.profile-stats span{
+    margin-right: 15px;
+    font-size: 14px;
+}
+.edit-btn{
+    background: var(--primary);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+.profile-tabs{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.profile-tabs a{
+    color: var(--text-muted);
+    text-decoration: none;
+}
+.tab-active{
+    color: white;
+    border-bottom: 2px solid var(--primary);
+}
+.post-card{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.post-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.post-user{
+    display: flex;
+    gap: 10px;
+}
+.post-avatar img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.badge{
+    background: purple;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+.post-text{
+    margin: 10px 0;
+}
+.post-image img{
+    width: 100%;
+    border-radius: 10px;
+}
+.post-footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    color: var(--text-muted);
+}
