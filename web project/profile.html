@@ -36,7 +36,7 @@
         <div class="profile-info">
           <h1>Alex Rider</h1>
           <p class="username">@alexrider</p>
-
+          <button id="follow-btn"></button>
           <div class="profile-stats">
             <span><strong>142</strong> Posts</span>
             <span><strong>4.2k</strong> Followers</span>
@@ -115,11 +115,12 @@
 
   </main>
   <script src="js/storage.js"></script>
-  <script>
+  <!-- <script>
     // Edit Profile functionality - opens a form dialog to edit profile info
-    const editBtn = document.querySelector('.edit-btn');
-    
-    editBtn.addEventListener('click', function() {
+const editBtn = document.querySelector('.edit-btn');
+
+if (editBtn) {
+  editBtn.addEventListener('click', function() {
       // Create modal overlay
       const modal = document.createElement('div');
       modal.style.position = 'fixed';
@@ -254,7 +255,7 @@
         saveUsers(users);
         setCurrentUser(users[index]);
       });
-      
+    
       // Handle cancel
       const cancelBtn = formContainer.querySelector('#cancelBtn');
       cancelBtn.addEventListener('click', function() {
@@ -268,7 +269,8 @@
         }
       });
     });
-  </script>
+  }
+  </script> -->
   <script src="js/profile.js"></script>
 </body>
 </html>
