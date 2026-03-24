@@ -23,25 +23,29 @@
         Join the community to rate, review, and discover movies you love.
       </p>
 
-      <form class="auth-form">
+      <form id="register-form" class="auth-form">
         <div class="form-group">
           <label for="name">Full Name</label>
           <input class="input-field" id="name" type="text" placeholder="Full Name" required />
+          <span id="name-error"></span>
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
           <input class="input-field" id="email" type="email" placeholder="Email" required />
+          <span id="email-error"></span>
         </div>
 
         <div class="form-group">
           <label for="password">Password</label>
           <input class="input-field" id="password" type="password" placeholder="Password" required />
+          <span id="password-error"></span>
         </div>
 
         <div class="form-group">
           <label for="confirm-password">Confirm Password</label>
           <input class="input-field" id="confirm-password" type="password" placeholder="Confirm Password" required />
+          <span id="confirm-password-error"></span>
         </div>
 
         <button type="submit" class="primary-btn">Create Account</button>

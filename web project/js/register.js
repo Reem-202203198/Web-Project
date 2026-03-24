@@ -30,26 +30,26 @@ function clearError(fieldId) {
 }
 
 function clearAllErrors() {
-  ["username", "email", "password", "confirmPassword"].forEach(clearError);
+  ["name", "email", "password", "confirm-password"].forEach(clearError);
 }
 const registerForm = document.getElementById('register-form');
 
 registerForm.addEventListener("submit", function (e) {
   e.preventDefault(); // Stop page from reloading
-
+  
   clearAllErrors();
-
+  
   // Get field values
-  const username = document.getElementById("username").value.trim();
+  const username = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
+  const confirmPassword = document.getElementById("confirm-password").value;
 
   let hasError = false;
 
   // --- Validate username ---
   if (username === "") {
-    showError("username", "Username is required.");
+    showError("name", "Username is required.");
     hasError = true;
   }
 
@@ -79,15 +79,15 @@ registerForm.addEventListener("submit", function (e) {
 
   // --- Validate confirm password ---
   if (confirmPassword === "") {
-    showError("confirmPassword", "Please confirm your password.");
+    showError("confirm-password", "Please confirm your password.");
     hasError = true;
   } else if (password !== confirmPassword) {
-    showError("confirmPassword", "Passwords do not match.");
+    showError("confirm-password", "Passwords do not match.");
     hasError = true;
   }
 
   // --- Stop if any errors ---
-  if (hasError) return;
+  // if (hasError) return;
 
   // --- Create new user object ---
   const newUser = {
@@ -108,6 +108,6 @@ registerForm.addEventListener("submit", function (e) {
 
   // --- Redirect to login ---
   alert("Account created successfully! Please log in.");
-  window.location.href = "index.html";
+  window.location.href = "login.html";
 });
 
