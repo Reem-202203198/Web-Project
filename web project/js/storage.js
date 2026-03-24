@@ -2,10 +2,10 @@
 //intiliazation
 function initStorage(){
     if (!localStorage.getItem('users')){
-        localStorage.setItem('users',JSON.stringify[])
+        localStorage.setItem('users',JSON.stringify([]))
     }
      if (!localStorage.getItem('posts')){
-        localStorage.setItem('posts',JSON.stringify[])
+        localStorage.setItem('posts',JSON.stringify([]))
     }
 
 }
