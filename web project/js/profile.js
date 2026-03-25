@@ -19,6 +19,14 @@ if (createPostBox && currentUser.id !== profileUser.id) {
 }
 
 document.querySelector(".profile-info h1").textContent=profileUser.username;
+const profileImg = document.querySelector(".profile-big-avatar img");
+if (profileImg) {
+    profileImg.src = profileUser.profilePicture || "https://via.placeholder.com/100";
+}
+const topImg = document.querySelector(".top-avatar img");
+if (topImg) {
+    topImg.src = currentUser.profilePicture || "https://via.placeholder.com/40";
+}
 const editBtn = document.querySelector(".edit-btn");
 
 if (editBtn && currentUser.id !== profileUser.id) {
@@ -83,6 +91,7 @@ userPosts.forEach(post => {
         <button class="delete-btn" data-id="${post.id}">Delete</button>
     </div>
     <p>${post.content}</p>
+    ${post.image ? `<img src="${post.image}" style="width:100%; border-radius:10px; margin-top:10px;">` : ""}
     <span>${new Date(post.timestamp).toLocaleString()}</span>
     `;
     const deleteBtn = postEl.querySelector(".delete-btn");
@@ -101,23 +110,44 @@ userPosts.forEach(post => {
 
 const postBtn=document.getElementById("post-btn");
 const postInput=document.getElementById("post-input");
+const postImageInput = document.getElementById("post-image");
 
 if (postBtn && postInput){
     postBtn.addEventListener("click", function() {
         const content = postInput.value.trim();
         if (!content) return;
+        const file = postImageInput.files[0];
 
-        const newPost = {
-            id: generateId(),
-            userId: currentUser.id,
-            content: content,
-            timestamp: Date.now()
-        };
-        const posts = getPosts();
-        posts.push(newPost);
-        savePosts(posts);
-        postInput.value="";
-        location.reload();
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const newPost = {
+                    id: generateId(),
+                    userId: currentUser.id,
+                    content: content,
+                    image: reader.result,
+                    timestamp: Date.now()
+                };
+
+                const posts = getPosts();
+                posts.push(newPost);
+                savePosts(posts);
+                location.reload();
+            };
+            reader.readAsDataURL(file);
+        } else {
+            const newPost = {
+                id: generateId(),
+                userId: currentUser.id,
+                content: content,
+                image: "",
+                timestamp: Date.now()
+            };
+            const posts = getPosts();
+            posts.push(newPost);
+            savePosts(posts);
+            location.reload();
+        }
     });
 }
 
@@ -272,6 +302,10 @@ if (editProfileBtn) {
             <label style="display: block; color: #9ca3db; margin-bottom: 0.5rem;">Bio</label>
             <textarea id="editBio" rows="3" style="width: 100%; padding: 0.75rem; background: #1a1d2b; border: 1px solid #2d2f3a; border-radius: 12px; color: white; font-size: 0.9rem; resize: vertical;">Film enthusiast | Movie critic | Sharing thoughts on cinema 🎬</textarea>
           </div>
+          <div style="margin-bottom: 1.2rem;">
+            <label style="display: block; color: #9ca3db; margin-bottom: 0.5rem;">Profile Image</label>
+            <input type="file" id="editImage" accept="image/*" style="color:white;">
+          </div>
           <div style="display: flex; gap: 1rem; justify-content: flex-end;">
             <button type="button" id="cancelBtn" style="padding: 0.6rem 1.4rem; background: #2d2f3a; border: none; border-radius: 40px; color: white; cursor: pointer;">Cancel</button>
             <button type="submit" style="padding: 0.6rem 1.4rem; background: linear-gradient(95deg, #4f46e5, #7c3aed); border: none; border-radius: 40px; color: white; cursor: pointer;">Save</button>
@@ -335,9 +369,6 @@ if (editProfileBtn) {
         const newBio = bioInput.value.trim();
         bioElement.textContent = newBio || '';
         
-        // Close modal
-        document.body.removeChild(modal);
-        
         // Show success message
         const toast = document.createElement('div');
         toast.textContent = 'Profile updated successfully!';
@@ -363,9 +394,23 @@ if (editProfileBtn) {
         const index=users.findIndex(u => u.id === currentUser.id);
         users[index].username=newName;
         users[index].bio=newBio;
+        const imageFile = document.getElementById("editImage").files[0];
 
+        if (imageFile) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                users[index].profilePicture = reader.result;
+                saveUsers(users);
+                setCurrentUser(users[index]);
+                location.reload();
+            };
+            reader.readAsDataURL(imageFile);
+            return;
+        }
         saveUsers(users);
         setCurrentUser(users[index]);
+        // Close modal
+        document.body.removeChild(modal);
       });
     
       // Handle cancel
