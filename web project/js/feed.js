@@ -320,3 +320,63 @@ logoutBtn.addEventListener("click", function () {
 
 
 loadFeed();
+
+function loadSuggestedUsers() {
+  const users = getUsers();
+  const container = document.querySelector(".right-sidebar .side-card:last-child");
+  if (!container) return;
+  const oldUsers = container.querySelectorAll(".suggested-user");
+  oldUsers.forEach(u => u.remove());
+
+  users.forEach(user => {
+    if (user.id === currentUser.id) return;
+    if (currentUser.following.includes(user.id)) return;
+    const userEl = document.createElement("div");
+    userEl.classList.add("suggested-user");
+
+    userEl.innerHTML = `
+      <div class="suggested-left">
+        <div class="small-avatar">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8oghbsuzggpkknQSSU-Ch_xep_9v3m6EeBQ&s">
+        </div>
+        <span class="user-link">${user.username}</span>
+      </div>
+      <button class="follow-btn"></button>
+    `;
+
+    const nameEl = userEl.querySelector(".user-link");
+    nameEl.addEventListener("click", function () {
+      window.location.href = `profile.html?id=${user.id}`;
+    });
+    const followBtn = userEl.querySelector(".follow-btn");
+    const isFollowing = currentUser.following.includes(user.id);
+    followBtn.textContent = isFollowing ? "Unfollow" : "Follow";
+
+    followBtn.addEventListener("click", function () {
+      let users = getUsers();
+
+      const currentIndex = users.findIndex(u => u.id === currentUser.id);
+      const targetIndex = users.findIndex(u => u.id === user.id);
+
+      if (currentUser.following.includes(user.id)) {
+        currentUser.following = currentUser.following.filter(id => id !== user.id);
+        users[targetIndex].followers = users[targetIndex].followers.filter(id => id !== currentUser.id);
+      } else {
+        currentUser.following.push(user.id);
+        users[targetIndex].followers.push(currentUser.id);
+        userEl.remove();
+      }
+
+      users[currentIndex] = currentUser;
+      saveUsers(users);
+      setCurrentUser(currentUser);
+      followBtn.textContent = currentUser.following.includes(user.id)
+        ? "Unfollow"
+        : "Follow";
+    });
+
+    container.appendChild(userEl);
+  });
+}
+
+loadSuggestedUsers();

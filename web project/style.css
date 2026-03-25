@@ -160,6 +160,8 @@ auth-link:visited,
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 .profile-left {
   display: flex;
@@ -167,24 +169,45 @@ auth-link:visited,
   gap: 20px;
 }
 .profile-big-avatar img {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
+  object-fit: cover;
 }
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-info h1 {
+  font-size: 20px;
+}
+
 .username {
   color: var(--text-muted);
-}
-.profile-stats span {
-  margin-right: 15px;
   font-size: 14px;
 }
-.edit-btn {
+.profile-stats {
+  display: flex;
+  gap: 15px;
+  margin-top: 8px;
+}
+.profile-stats span {
+  font-size: 13px;
+}
+.edit-btn,
+#follow-btn {
   background: var(--primary);
   border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
+  padding: 8px 14px;
+  border-radius: 20px;
   color: white;
   cursor: pointer;
+  font-size: 13px;
+}
+#follow-btn {
+  margin-top: 5px;
 }
 .profile-tabs {
   display: flex;
@@ -324,6 +347,24 @@ auth-link:visited,
 #logout-btn:hover {
     background: var(--primary);
     border-color: var(--primary);
+}
+
+.follow-list {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-top: 15px;
+  padding: 10px;
+}
+.follow-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.follow-item:hover {
+  background: #222;
 }
 
 /* rouaa */
@@ -700,4 +741,36 @@ auth-link:visited,
   .composer-actions {
     display: none; /* remove clutter */
   }
+  .app-body .profile-header {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+}
+
+.app-body .profile-left {
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-body .profile-big-avatar img {
+  width: 70px;
+  height: 70px;
+}
+
+.app-body .profile-info {
+  text-align: center;
+}
+
+.app-body .profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.app-body .edit-btn {
+  width: 100%;
+}
 }

@@ -28,8 +28,10 @@ if (editBtn && currentUser.id !== profileUser.id) {
 document.querySelector(".username").textContent="@"+profileUser.username;
 const stats = document.querySelectorAll(".profile-stats span");
 
-stats[1].innerHTML = `<strong>${profileUser.followers.length}</strong> Followers`;
-stats[2].innerHTML = `<strong>${profileUser.following.length}</strong> Following`;
+if (stats.length >= 3 && profileUser) {
+    stats[1].innerHTML = `<strong>${profileUser.followers.length}</strong> Followers`;
+    stats[2].innerHTML = `<strong>${profileUser.following.length}</strong> Following`;
+}
 const followBtn = document.getElementById("follow-btn");
 
 if (followBtn) {
@@ -61,6 +63,9 @@ if (followBtn) {
 
 const posts=getPosts();
 const userPosts=posts.filter(post => post.userId === profileUser.id);
+if (stats.length >= 3) {
+    stats[0].innerHTML = `<strong>${userPosts.length}</strong> Posts`;
+}
 const container=document.querySelector(".profile-posts");
 container.innerHTML="";
 
@@ -125,6 +130,104 @@ if (logoutBtn) {
     });
 }
 
+if (stats.length >= 3 && profileUser) {
+
+    const followersBtn = stats[1];
+    const followingBtn = stats[2];
+    followersBtn.style.cursor = "pointer";
+    followingBtn.style.cursor = "pointer";
+    function openFollowModal(type) {
+        const users = getUsers();
+
+        const modal = document.createElement("div");
+        modal.style.position = "fixed";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100%";
+        modal.style.height = "100%";
+        modal.style.background = "rgba(0,0,0,0.8)";
+        modal.style.display = "flex";
+        modal.style.justifyContent = "center";
+        modal.style.alignItems = "center";
+
+        const box = document.createElement("div");
+        box.style.background = "#1a1a1a";
+        box.style.padding = "20px";
+        box.style.borderRadius = "12px";
+        box.style.width = "300px";
+        box.style.maxHeight = "400px";
+        box.style.overflowY = "auto";
+
+        const title = document.createElement("h3");
+        title.textContent = type === "followers" ? "Followers" : "Following";
+        box.appendChild(title);
+
+        const list = type === "followers"
+            ? profileUser.followers
+            : profileUser.following;
+
+        if (list.length === 0) {
+            const empty = document.createElement("p");
+            empty.textContent = "No users";
+            box.appendChild(empty);
+        }
+
+        list.forEach(id => {
+            const user = users.find(u => u.id === id);
+            if (!user) return;
+
+            const item = document.createElement("div");
+            item.style.display = "flex";
+            item.style.alignItems = "center";
+            item.style.gap = "10px";
+            item.style.padding = "10px";
+            item.style.cursor = "pointer";
+
+            const img = document.createElement("img");
+            img.src = user.profilePicture || "https://via.placeholder.com/40";
+            img.style.width = "35px";
+            img.style.height = "35px";
+            img.style.borderRadius = "50%";
+            img.style.objectFit = "cover";
+
+            const name = document.createElement("span");
+            name.textContent = user.username;
+
+            item.addEventListener("mouseenter", () => {
+                item.style.background = "#2a2a2a";
+            });
+            item.addEventListener("mouseleave", () => {
+                item.style.background = "transparent";
+            });
+
+            item.appendChild(img);
+            item.appendChild(name);
+
+            item.addEventListener("click", function () {
+                window.location.href = `profile.html?id=${user.id}`;
+            });
+
+            box.appendChild(item);
+        });
+
+        modal.appendChild(box);
+        document.body.appendChild(modal);
+
+        modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+    }
+
+    followersBtn.addEventListener("click", function () {
+        openFollowModal("followers");
+    });
+
+    followingBtn.addEventListener("click", function () {
+        openFollowModal("following");
+    });
+}
 // Edit Profile functionality - opens a form dialog to edit profile info
 const editProfileBtn = document.querySelector('.edit-btn');
 
