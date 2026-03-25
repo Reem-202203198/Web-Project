@@ -80,7 +80,7 @@ registerForm.addEventListener("submit", function (e) {
     hasError = true;
   }
 
-  if (hasError) return; // ✅ STOP here if any errors
+  if (hasError) return; 
 
   const newUser = {
     id: generateId(),
