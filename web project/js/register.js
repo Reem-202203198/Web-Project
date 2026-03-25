@@ -1,26 +1,24 @@
-//redirect
 redirectIfLoggedIn();
-//initialize storage
 initStorage();
 
-//validation functions
-function isValidEmail(email){
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
-function isValidPassword(password){
-    const hasNumber = /\d/.test(password);
-    return password.length >= 8 && hasNumber;
+function isValidPassword(password) {
+  const hasNumber = /\d/.test(password);
+  return password.length >= 8 && hasNumber;
+}
 
+function showError(fieldId, message) {
+  const errorEl = document.getElementById(fieldId + "-error");
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.style.display = "block";
+  }
 }
-function showError(fieldId, message){
-    const errorEl = document.getElementById(fieldId + '-error');
-    if(errorEl){
-        errorEl.textContent = message;
-        errorEl.style.display = 'block';
-    }
-}
+
 function clearError(fieldId) {
   const errorEl = document.getElementById(fieldId + "-error");
   if (errorEl) {
@@ -30,30 +28,28 @@ function clearError(fieldId) {
 }
 
 function clearAllErrors() {
-  ["name", "email", "password", "confirm-password"].forEach(clearError);
+  ["username", "email", "password", "confirmPassword"].forEach(clearError);
 }
-const registerForm = document.getElementById('register-form');
+
+const registerForm = document.getElementById("register-form");
 
 registerForm.addEventListener("submit", function (e) {
-  e.preventDefault(); // Stop page from reloading
-  
+  e.preventDefault();
+
   clearAllErrors();
-  
-  // Get field values
-  const username = document.getElementById("name").value.trim();
+
+  const username = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirm-password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
 
   let hasError = false;
 
-  // --- Validate username ---
   if (username === "") {
-    showError("name", "Username is required.");
+    showError("username", "Username is required.");
     hasError = true;
   }
 
-  // --- Validate email ---
   if (email === "") {
     showError("email", "Email is required.");
     hasError = true;
@@ -65,7 +61,6 @@ registerForm.addEventListener("submit", function (e) {
     hasError = true;
   }
 
-  // --- Validate password ---
   if (password === "") {
     showError("password", "Password is required.");
     hasError = true;
@@ -77,37 +72,31 @@ registerForm.addEventListener("submit", function (e) {
     hasError = true;
   }
 
-  // --- Validate confirm password ---
   if (confirmPassword === "") {
-    showError("confirm-password", "Please confirm your password.");
+    showError("confirmPassword", "Please confirm your password.");
     hasError = true;
   } else if (password !== confirmPassword) {
-    showError("confirm-password", "Passwords do not match.");
+    showError("confirmPassword", "Passwords do not match.");
     hasError = true;
   }
 
-  // --- Stop if any errors ---
-  // if (hasError) return;
+  if (hasError) return; // ✅ STOP here if any errors
 
-  // --- Create new user object ---
   const newUser = {
     id: generateId(),
     username: username,
     email: email,
-    password: password, // In real apps you'd hash this
+    password: password,
     bio: "",
     profilePicture: "",
     following: [],
     followers: [],
   };
 
-  // --- Save to localStorage ---
   const users = getUsers();
   users.push(newUser);
   saveUsers(users);
 
-  // --- Redirect to login ---
   alert("Account created successfully! Please log in.");
   window.location.href = "login.html";
 });
-

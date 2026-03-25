@@ -1,63 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CineFan - Register</title>
-  <link rel="stylesheet" href="style.css" />
-
-</head>
-<body class="auth-body">
-
-  <main class="auth-layout">
-    <!-- <div class="auth-logo-box small-logo-box">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineFan - Register</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-layout">
+      <!-- <div class="auth-logo-box small-logo-box">
       <div class="logo-icon">Logo </div>
     </div>
 
     <h1 class="brand-name">CineFan</h1> -->
 
-    <section class="auth-card">
-      <h1 class="brand-name">CineFan</h1>
-      <h2 class="auth-title">Create Account</h2>
-      <p class="auth-subtitle">
-        Join the community to rate, review, and discover movies you love.
-      </p>
+      <section class="auth-card">
+        <h1 class="brand-name">CineFan</h1>
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">
+          Join the community to rate, review, and discover movies you love.
+        </p>
 
-      <form id="register-form" class="auth-form">
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input class="input-field" id="name" type="text" placeholder="Full Name" required />
-          <span id="name-error"></span>
-        </div>
+        <form id="register-form" class="auth-form">
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input class="input-field" id="email" type="email" placeholder="Email" required />
-          <span id="email-error"></span>
-        </div>
+  <!-- Full Name / Username -->
+  <div class="form-group">
+    <label for="username">Full Name</label>
+    <input
+      class="input-field"
+      id="username"
+      type="text"
+      placeholder="Full Name"
+      required
+    />
+    <span id="username-error" style="color: red; display: none;"></span>
+  </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input class="input-field" id="password" type="password" placeholder="Password" required />
-          <span id="password-error"></span>
-        </div>
+  <!-- Email -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input
+      class="input-field"
+      id="email"
+      type="email"
+      placeholder="Email"
+      required
+    />
+    <span id="email-error" style="color: red; display: none;"></span>
+  </div>
 
-        <div class="form-group">
-          <label for="confirm-password">Confirm Password</label>
-          <input class="input-field" id="confirm-password" type="password" placeholder="Confirm Password" required />
-          <span id="confirm-password-error"></span>
-        </div>
+  <!-- Password -->
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      class="input-field"
+      id="password"
+      type="password"
+      placeholder="Password"
+      required
+    />
+    <span id="password-error" style="color: red; display: none;"></span>
+  </div>
 
-        <button type="submit" class="primary-btn">Create Account</button>
-      </form>
+  <!-- Confirm Password -->
+  <div class="form-group">
+    <label for="confirmPassword">Confirm Password</label>
+    <input
+      class="input-field"
+      id="confirmPassword"
+      type="password"
+      placeholder="Confirm Password"
+      required
+    />
+    <span id="confirmPassword-error" style="color: red; display: none;"></span>
+  </div>
 
-      <p class="auth-text">
-        Already have an account?
-        <a class="auth-link" href="login.html">Login</a>
-      </p>
-    </section>
-  </main>
-<script src="js/storage.js"></script>
-<script src="js/register.js"></script>
-</body>
+  <button type="submit" class="primary-btn">Create Account</button>
+</form>
+
+        <p class="auth-text">
+          Already have an account?
+          <a class="auth-link" href="login.html">Login</a>
+        </p>
+      </section>
+    </main>
+    <script src="js/storage.js"></script>
+    <script src="js/register.js"></script>
+  </body>
 </html>
