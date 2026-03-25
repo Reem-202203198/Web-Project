@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CineFan - Feed</title>
     <link rel="stylesheet" href="style.css" />
-  
   </head>
+
   <body class="app-body">
     <header class="topbar">
       <div class="logo-text">CineFan</div>
@@ -17,16 +17,18 @@
 
       <nav class="main-nav">
         <a href="feed.html" class="active">Home</a>
-        <a href="">Explore</a>
+        <a href="#">Explore</a>
         <a href="#">Reviews</a>
         <a href="#">Notifications</a>
         <a href="profile.html">Profile</a>
       </nav>
 
+      <button id="logout-btn">Logout</button>
+
       <div class="top-avatar">
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyW2MAFrFnfa_bT1jSttLbmvfotJcqQyCCGg&s"
-          alt=""
+          alt="User Avatar"
         />
       </div>
     </header>
@@ -60,10 +62,15 @@
             <div class="mini-avatar">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyW2MAFrFnfa_bT1jSttLbmvfotJcqQyCCGg&s"
-                alt=""
+                alt="User Avatar"
               />
             </div>
-            <input type="text" placeholder="What's your latest watch?" />
+
+            <input
+              type="text"
+              id="feed-post-input"
+              placeholder="What's your latest watch?"
+            />
           </div>
 
           <div class="composer-bottom">
@@ -72,73 +79,12 @@
               <span>Tag Movie</span>
               <span>Rating</span>
             </div>
-            <button class="small-red-btn">Post</button>
+
+            <button class="small-red-btn" id="feed-post-btn">Post</button>
           </div>
         </div>
 
-        <article class="post-card card">
-          <div class="post-head">
-            <div class="post-user">
-              <div class="post-avatar">
-                <img
-                  src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
-                  alt=""
-                />
-              </div>
-              <div>
-                <h4>Alex Mercer</h4>
-                <p>2 hours ago</p>
-              </div>
-            </div>
-            <span class="badge">MOVIE REVIEW</span>
-          </div>
-
-          <p class="post-text">
-            Just watched Interstellar again in IMAX. The docking scene still
-            gives me goosebumps every single time. Hans Zimmer's score is an
-            absolute masterpiece! 🚀✨
-          </p>
-
-          <div class="post-image placeholder-img space-img"></div>
-
-          <div class="post-footer">
-            <span>2.4k</span>
-            <span>142</span>
-            <span>Save</span>
-          </div>
-        </article>
-
-        <article class="post-card card">
-          <div class="post-head">
-            <div class="post-user">
-              <div class="post-avatar">
-                <img
-                  src="https://thumbs.dreamstime.com/b/profile-beautiful-smiling-girl-6243612.jpg"
-                  alt=""
-                />
-              </div>
-              <div>
-                <h4>Sarah Jenkins</h4>
-                <p>5 hours ago</p>
-              </div>
-            </div>
-            <span class="badge">SERIES REC</span>
-          </div>
-
-          <p class="post-text">
-            If you haven't seen Severance yet, what are you doing with your
-            life? The cinematography is insane and the plot twists keep you
-            guessing until the very end.
-          </p>
-
-          <div class="post-image placeholder-img office-img"></div>
-
-          <div class="post-footer">
-            <span>856</span>
-            <span>45</span>
-            <span>Save</span>
-          </div>
-        </article>
+        <div id="feed-posts-container"></div>
       </section>
 
       <aside class="right-sidebar">
@@ -174,7 +120,7 @@
               <div class="small-avatar">
                 <img
                   src="https://t4.ftcdn.net/jpg/06/08/55/73/360_F_608557356_ELcD2pwQO9pduTRL30umabzgJoQn5fnd.jpg"
-                  alt=""
+                  alt="MovieGeek99"
                 />
               </div>
               <span>MovieGeek99</span>
@@ -187,7 +133,7 @@
               <div class="small-avatar">
                 <img
                   src="https://t4.ftcdn.net/jpg/05/69/89/19/360_F_569891944_kDbkk5J3PRy2FMKV8msXxJy2hSMFdyu7.jpg"
-                  alt=""
+                  alt="CinephileClub"
                 />
               </div>
               <span>CinephileClub</span>
@@ -200,7 +146,7 @@
               <div class="small-avatar">
                 <img
                   src="https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg="
-                  alt=""
+                  alt="DirectorCuts"
                 />
               </div>
               <span>DirectorCuts</span>
@@ -210,6 +156,8 @@
         </div>
       </aside>
     </main>
-      <script src="js/storage.js"></script>
+
+    <script src="js/storage.js"></script>
+    <script src="js/feed.js"></script>
   </body>
 </html>
