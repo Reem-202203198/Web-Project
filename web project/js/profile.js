@@ -21,11 +21,11 @@ if (createPostBox && currentUser.id !== profileUser.id) {
 document.querySelector(".profile-info h1").textContent=profileUser.username;
 const profileImg = document.querySelector(".profile-big-avatar img");
 if (profileImg) {
-    profileImg.src = profileUser.profilePicture || "https://via.placeholder.com/100";
+    profileImg.src = profileUser.profilePicture ? profileUser.profilePicture : "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 }
 const topImg = document.querySelector(".top-avatar img");
 if (topImg) {
-    topImg.src = currentUser.profilePicture || "https://via.placeholder.com/40";
+    topImg.src = currentUser.profilePicture ? currentUser.profilePicture : "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 }
 const editBtn = document.querySelector(".edit-btn");
 
