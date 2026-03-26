@@ -11,7 +11,33 @@ const feedContainer = document.getElementById("feed-posts-container");
 const postInput = document.getElementById("feed-post-input");
 const postBtn = document.getElementById("feed-post-btn");
 const logoutBtn = document.getElementById("logout-btn");
+//////////////////////
+const topImg = document.querySelector(".top-avatar img");
 
+if (topImg) {
+  const user = getUserById(currentUser.id);
+  const avatar = getAvatar(user);
+
+  if (avatar) {
+    topImg.src = avatar;
+  } else {
+    topImg.style.display = "none";
+  }
+}
+
+const miniImg = document.querySelector(".mini-avatar img");
+
+if (miniImg) {
+  const user = getUserById(currentUser.id);
+  const avatar = getAvatar(user);
+
+  if (avatar) {
+    miniImg.src = avatar;
+  } else {
+    miniImg.style.display = "none";
+  }
+}
+/////////////////////////
 // format timestamp
 function formatTimestamp(timestamp) {
   const date = new Date(timestamp);
@@ -30,7 +56,7 @@ function getAvatar(user) {
     return user.profilePicture;
   }
 
-  return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8oghbsuzggpkknQSSU-Ch_xep_9v3m6EeBQ&s";
+  return "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 }
 
 // // Task 2: create post card
@@ -101,7 +127,7 @@ function createPostCard(post, author) {
     <div class="post-head">
       <div class="post-user">
         <div class="post-avatar">
-          <img src="${getAvatar(author)}" alt="${author.username}">
+          <img src="${getAvatar(getUserById(post.userId))}">
         </div>
         <div>
           <h4 class="post-author" data-user-id="${author.id}" style="cursor:pointer;">
@@ -363,15 +389,30 @@ postBtn.addEventListener("click", function () {
     alert("Post content cannot be empty.");
     return;
   }
-
+  const fileInput = document.getElementById("feed-image");
+  const file = fileInput ? fileInput.files[0] : null;
   const newPost = {
     id: generateId(),
     userId: currentUser.id,
     content: content,
+    image:"",
     timestamp: new Date().toISOString(),
     likes: [],
     comments: []
   };
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      newPost.image = reader.result;
+
+      const posts = getPosts();
+      posts.push(newPost);
+      savePosts(posts);
+      loadFeed();
+    };
+    reader.readAsDataURL(file);
+    return;
+  }
 
   const posts = getPosts();
   posts.push(newPost);
@@ -409,7 +450,7 @@ function loadSuggestedUsers() {
     userEl.innerHTML = `
       <div class="suggested-left">
         <div class="small-avatar">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8oghbsuzggpkknQSSU-Ch_xep_9v3m6EeBQ&s">
+          <img src="${getAvatar(getUserById(user.id))}">
         </div>
         <span class="user-link">${user.username}</span>
       </div>
