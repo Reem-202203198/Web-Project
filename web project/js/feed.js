@@ -79,33 +79,22 @@ function getAvatar(user) {
 //   });
 
 //   // Click comments go to post detail page 
- // const commentLink = postCard.querySelector(".comment-link");
-  // commentLink.addEventListener("click", function () {
-   //  window.location.href = `post.html?id=${post.id}`;
-   //});
+//   const commentLink = postCard.querySelector(".comment-link");
+//   commentLink.addEventListener("click", function () {
+//     window.location.href = `post.html?id=${post.id}`;
+//   });
 
-//  return postCard;
+//   return postCard;
 // }
 
 
 function createPostCard(post, author) {
-   // Create a container element for a single post
   const postCard = document.createElement("article");
   postCard.className = "post-card card";
-  // Check if the current user is the owner of this post
+
   const isOwner = currentUser.id === post.userId;
-
-  // Get number of likes (safe check in case likes is not an array)
   const likeCount = Array.isArray(post.likes) ? post.likes.length : 0;
-
-  // Get number of comments (safe check in case comments is not an array)
   const commentCount = Array.isArray(post.comments) ? post.comments.length : 0;
-  
- 
-
-
-
-
 
   // Use template literal for better readability and to easily include conditional delete button
   postCard.innerHTML = `
@@ -132,16 +121,16 @@ function createPostCard(post, author) {
     <p class="post-text">${post.content}</p>
 
     <div class="post-footer">
-  <button class="like-btn" data-post-id="${post.id}">
-    ${Array.isArray(post.likes) && post.likes.includes(currentUser.id) ? "❤️ Liked" : "🤍 Like"}
-  </button>
+      <button class="like-btn">
+        ${Array.isArray(post.likes) && post.likes.includes(currentUser.id) ? "❤️ Liked" : "🤍 Like"}
+      </button>
 
-  <span class="like-count">${likeCount}</span>
+      <span class="like-count">${likeCount}</span>
 
-  <span class="comment-link" style="cursor:pointer;">
-    💬 ${commentCount}
-  </span>
-</div>
+      <span class="comment-link" style="cursor:pointer;">
+        💬${commentCount}
+      </span>
+    </div>
 
     <div class="comments-section" style="display:none; margin-top:15px;">
       <div class="comments-list" style="margin-bottom:10px;"></div>
@@ -250,8 +239,6 @@ function createPostCard(post, author) {
       timestamp: new Date().toISOString()
     });
 
-    
-
     savePosts(posts);
 
     commentInput.value = "";
@@ -263,57 +250,39 @@ function createPostCard(post, author) {
    //to show the new comment immediately after adding without needing to click the comment link again, we call renderComments() here to update the comments section in real-time
     renderComments();
   });
+// Handle post deletion when delete button is clicked (only visible to post owner)
+  const likeBtn = postCard.querySelector(".like-btn");
+  const likeCountEl = postCard.querySelector(".like-count");
 
-  // Like / Unlike functionality // 
-const likeBtn = postCard.querySelector(".like-btn");
-const likeCountEl = postCard.querySelector(".like-count");
-
-//likeBtn.addEventListener("click", function () {
-  let posts = getPosts();
-  const postIndex = posts.findIndex(p => p.id === post.id);
-
-  if (postIndex === -1) return;
-
-  if (!Array.isArray(posts[postIndex].likes)) {
-    posts[postIndex].likes = [];
-  }
-  
-posts[postIndex].comments.push({
-  userId: currentUser.id,
-  text: text,
-  timestamp: new Date().toISOString()
-});
-  let userId = currentUser.id;
-
-  if (posts[postIndex].likes.includes(userId)) {
-    posts[postIndex].likes =
-      posts[postIndex].likes.filter(id => id !== userId); 
-  } else {
-    posts[postIndex].likes.push(userId);
-  }
-
-  savePosts(posts);
-
-  //  important
-  loadFeed();
-};
-// Task2  Handle post deletion when delete button is clicked (only visible to post owner)
-const deleteBtn = postCard.querySelector(".delete-btn");
-
-if (deleteBtn) {
-  deleteBtn.addEventListener("click", function () {
-
+  likeBtn.addEventListener("click", function () {
     let posts = getPosts();
+    let postIndex = posts.findIndex(p => p.id === post.id);
 
-    posts = posts.filter(p => p.id !== post.id);
+    if (postIndex === -1) return;
+
+    if (!Array.isArray(posts[postIndex].likes)) {
+      posts[postIndex].likes = [];
+    }
+
+    let userId = currentUser.id;
+
+    if (posts[postIndex].likes.includes(userId)) {
+      posts[postIndex].likes =
+        posts[postIndex].likes.filter(id => id !== userId);
+    } else {
+      posts[postIndex].likes.push(userId);
+    }
 
     savePosts(posts);
 
-    postCard.remove();
-  });
-}
-  return postCard;
+    const updatedLikes = posts[postIndex].likes.length;
+    likeCountEl.textContent = updatedLikes;
 
+    likeBtn.textContent =
+      posts[postIndex].likes.includes(userId) ? "❤️ Liked" : "🤍 Like";
+  });
+  return postCard;
+}
 
 // Task 2: Load and display feed
 function loadFeed() {
@@ -368,7 +337,6 @@ postBtn.addEventListener("click", function () {
     likes: [],
     comments: []
   };
-
 
   const posts = getPosts();
   posts.push(newPost);
