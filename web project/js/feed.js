@@ -145,6 +145,7 @@ function createPostCard(post, author) {
     </div>
 
     <p class="post-text">${post.content}</p>
+    ${post.image ? `<img src="${post.image}" style="width:100%; border-radius:10px; margin-top:10px;">` : ""}
 
     <div class="post-footer">
       <button class="like-btn">
