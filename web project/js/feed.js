@@ -268,21 +268,26 @@ function createPostCard(post, author) {
 const likeBtn = postCard.querySelector(".like-btn");
 const likeCountEl = postCard.querySelector(".like-count");
 
-likeBtn.addEventListener("click", function () {
+//likeBtn.addEventListener("click", function () {
   let posts = getPosts();
-  let postIndex = posts.findIndex(p => p.id === post.id);
+  const postIndex = posts.findIndex(p => p.id === post.id);
 
   if (postIndex === -1) return;
 
   if (!Array.isArray(posts[postIndex].likes)) {
     posts[postIndex].likes = [];
   }
-
+  
+posts[postIndex].comments.push({
+  userId: currentUser.id,
+  text: text,
+  timestamp: new Date().toISOString()
+});
   let userId = currentUser.id;
 
   if (posts[postIndex].likes.includes(userId)) {
     posts[postIndex].likes =
-      posts[postIndex].likes.filter(id => id !== userId);
+      posts[postIndex].likes.filter(id => id !== userId); 
   } else {
     posts[postIndex].likes.push(userId);
   }
@@ -291,10 +296,24 @@ likeBtn.addEventListener("click", function () {
 
   //  important
   loadFeed();
-});
-// Handle post deletion when delete button is clicked (only visible to post owner)
-  return postCard;
+};
+// Task2 student 3 Handle post deletion when delete button is clicked (only visible to post owner)
+const deleteBtn = postCard.querySelector(".delete-btn");
+
+if (deleteBtn) {
+  deleteBtn.addEventListener("click", function () {
+
+    let posts = getPosts();
+
+    posts = posts.filter(p => p.id !== post.id);
+
+    savePosts(posts);
+
+    postCard.remove();
+  });
 }
+  return postCard;
+
 
 // Task 2: Load and display feed
 function loadFeed() {
