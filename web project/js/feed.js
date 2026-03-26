@@ -199,11 +199,46 @@ function createPostCard(post, author) {
       commentEl.style.borderBottom = "1px solid #2a2a2a";
 
       commentEl.innerHTML = `
-        <strong>${commentUser ? commentUser.username : "Unknown User"}</strong>
-        <p style="margin:5px 0; color:#ddd;">${comment.text}</p>
-        <small style="color:#888;">${formatTimestamp(comment.timestamp)}</small>
-      `;
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong>${commentUser ? commentUser.username : "Unknown User"}</strong>
+            <p style="margin:5px 0; color:#ddd;">${comment.text}</p>
+            <small style="color:#888;">${formatTimestamp(comment.timestamp)}</small>
+          </div>
 
+          ${
+            comment.userId === currentUser.id
+              ? `<button class="delete-comment-btn" style="background:none;border:none;color:red;cursor:pointer;">Delete</button>`
+              : ""
+          }
+        </div>
+      `;
+      const deleteBtn = commentEl.querySelector(".delete-comment-btn");
+
+      if (deleteBtn) {
+        deleteBtn.addEventListener("click", function () {
+          let posts = getPosts();
+          let postIndex = posts.findIndex(p => p.id === post.id);
+
+          if (postIndex === -1) return;
+
+          posts[postIndex].comments = posts[postIndex].comments.filter(
+            c =>
+              !(
+                c.userId === comment.userId &&
+                c.text === comment.text &&
+                c.timestamp === comment.timestamp
+              )
+          );
+
+          savePosts(posts);
+
+          renderComments();
+
+          const newCount = posts[postIndex].comments.length;
+          commentLink.textContent = `💬${newCount}`;
+        });
+      }
       commentsList.appendChild(commentEl);
     });
   }
