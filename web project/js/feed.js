@@ -297,7 +297,7 @@ posts[postIndex].comments.push({
   //  important
   loadFeed();
 };
-// Task2 student 3 Handle post deletion when delete button is clicked (only visible to post owner)
+// Task2  Handle post deletion when delete button is clicked (only visible to post owner)
 const deleteBtn = postCard.querySelector(".delete-btn");
 
 if (deleteBtn) {
