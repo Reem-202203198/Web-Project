@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineFan - Feed</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="app-body">
+    <header class="topbar">
+      <div class="logo-text">CineFan</div>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Search movies, reviews, and users..." />
+      </div>
+
+      <nav class="main-nav">
+        <a href="feed.html" class="active">Home</a>
+        <a href="profile.html">Profile</a>
+      </nav>
+
+      <button id="logout-btn">Logout</button>
+
+      <div class="top-avatar">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyW2MAFrFnfa_bT1jSttLbmvfotJcqQyCCGg&s"
+          alt="User Avatar"
+        />
+      </div>
+    </header>
+
+    <main class="feed-layout">
+      <aside class="left-sidebar">
+        <div class="sidebar-block">
+          <h3>MENU</h3>
+          <ul class="sidebar-menu">
+            <li class="active-item">Top Feed</li>
+            <li>Recent</li>
+            <li>Saved Posts</li>
+          </ul>
+        </div>
+
+        <div class="sidebar-block">
+          <h3>GENRES</h3>
+          <div class="genre-tags">
+            <span>Action</span>
+            <span>Sci-Fi</span>
+            <span>K-Drama</span>
+            <span>Thriller</span>
+            <span>Comedy</span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="center-feed">
+        <div class="composer-card card">
+          <div class="composer-top">
+            <div class="mini-avatar">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyW2MAFrFnfa_bT1jSttLbmvfotJcqQyCCGg&s"
+                alt="User Avatar"
+              />
+            </div>
+
+            <input
+              type="text"
+              id="feed-post-input"
+              placeholder="What's your latest watch?"
+            />
+          </div>
+
+          <div class="composer-bottom">
+            <div class="composer-actions">
+              <span>Add Poster</span>
+            </div>
+
+            <button class="small-red-btn" id="feed-post-btn">Post</button>
+          </div>
+        </div>
+
+        <div id="feed-posts-container"></div>
+      </section>
+
+      <aside class="right-sidebar">
+        <div class="card side-card">
+          <h3>TRENDING MOVIES</h3>
+          <ol class="trending-list">
+            <li>
+              <div>
+                <strong>Dune: Part Two</strong>
+                <span>4.8 / 5.0</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Oppenheimer</strong>
+                <span>4.7 / 5.0</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Poor Things</strong>
+                <span>4.5 / 5.0</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="card side-card suggested-box">
+          <h3>SUGGESTED USERS</h3>
+
+          <div class="suggested-user">
+            <div class="suggested-left">
+              <div class="small-avatar">
+                <img
+                  src="https://t4.ftcdn.net/jpg/06/08/55/73/360_F_608557356_ELcD2pwQO9pduTRL30umabzgJoQn5fnd.jpg"
+                  alt="MovieGeek99"
+                />
+              </div>
+              <span>MovieGeek99</span>
+            </div>
+            <button class="follow-btn">Follow</button>
+          </div>
+
+          <div class="suggested-user">
+            <div class="suggested-left">
+              <div class="small-avatar">
+                <img
+                  src="https://t4.ftcdn.net/jpg/05/69/89/19/360_F_569891944_kDbkk5J3PRy2FMKV8msXxJy2hSMFdyu7.jpg"
+                  alt="CinephileClub"
+                />
+              </div>
+              <span>CinephileClub</span>
+            </div>
+            <button class="follow-btn">Follow</button>
+          </div>
+
+          <div class="suggested-user">
+            <div class="suggested-left">
+              <div class="small-avatar">
+                <img
+                  src="https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg="
+                  alt="DirectorCuts"
+                />
+              </div>
+              <span>DirectorCuts</span>
+            </div>
+            <button class="follow-btn">Follow</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <script src="js/storage.js"></script>
+    <script src="js/feed.js"></script>
+  </body>
+</html>

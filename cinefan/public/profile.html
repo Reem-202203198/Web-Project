@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineFan - Profile</title>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body class="app-body">
+
+  <header class="topbar">
+    <div class="logo-text">CineFan</div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search movies, reviews, and users..." />
+    </div>
+
+    <nav class="main-nav">
+      <a href="feed.html">Home</a>
+      <a href="#">Explore</a>
+      <a href="#">Reviews</a>
+      <a href="#">Notifications</a>
+      <a href="profile.html" class="active">Profile</a>
+    </nav>
+    <button id="logout-btn">Logout</button>
+    <div class="top-avatar"><img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" alt=""></div>
+  </header>
+
+  <main class="app-layout">
+
+    <section class="profile-card profile-header">
+      <div class="profile-left">
+        <div class="profile-big-avatar"><img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" alt=""></div>
+
+        <div class="profile-info">
+          <h1>Alex Rider</h1>
+          <p class="username">@alexrider</p>
+          <button id="follow-btn"></button>
+          <div class="profile-stats">
+            <span><strong>142</strong> Posts</span>
+            <span><strong>4.2k</strong> Followers</span>
+            <span><strong>890</strong> Following</span>
+          </div>
+          <div id="follow-list" class="follow-list" style="display: none;"></div>
+        </div>
+      </div>
+
+      <button class="edit-btn">Edit Profile</button>
+    </section>
+
+    <nav class="profile-tabs">
+      <a href="#" class="tab-active">Posts</a>
+      <a href="#">Reviews</a>
+      <a href="#">Saved</a>
+      <a href="#">Lists</a>
+    </nav>
+    <div class="create-post">
+      <textarea id="post-input" placeholder="Write something..."></textarea>
+      <input type="file" id="post-image" accept="image/*">
+      <button id="post-btn">Post</button>
+    </div>
+    <section class="profile-posts">
+
+      <article class="post-card card">
+        <div class="post-head">
+          <div class="post-user">
+            <div class="post-avatar"><img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" alt=""></div>
+            <div>
+              <h4>Alex Rider</h4>
+              <p>2 days ago</p>
+            </div>
+          </div>
+          <span class="badge">MOVIE REVIEW</span>
+        </div>
+
+        <p class="post-text">
+          Finally caught up with The Batman. The gritty, noir detective approach was exactly
+          what the character needed. Robert Pattinson completely sold me on his version of Bruce Wayne.
+          That batmobile chase sequence? Absolute cinema. 🦇🎞️
+        </p>
+
+        <div class="post-image"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTQcZse6J7eOFctyu3f-ajl_cd1yRxTYt2kw&s" alt=""></div>
+
+        <div class="post-footer">
+          <span>1.2k</span>
+          <span>89</span>
+          <span>Save</span>
+        </div>
+      </article>
+
+      <article class="post-card card">
+        <div class="post-head">
+          <div class="post-user">
+            <div class="post-avatar"><img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" alt=""></div>
+            <div>
+              <h4>Alex Rider</h4>
+              <p>1 week ago</p>
+            </div>
+          </div>
+          <span class="badge">DISCUSSION</span>
+        </div>
+
+        <p class="post-text">
+          What's everyone's favorite Denis Villeneuve film so far? I'm torn between Blade Runner 2049
+          and Arrival. Both are visually stunning and deeply philosophical in their own ways.
+        </p>
+
+        <div class="post-footer">
+          <span>856</span>
+          <span>234</span>
+          <span>Save</span>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+  <script src="js/storage.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
