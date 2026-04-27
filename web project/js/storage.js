@@ -54,7 +54,7 @@ function clearCurrentUser() {
 //AUTH GUARD{
 function requireAuth(){
     if(!getCurrentUser()){
-        window.location.href='Login.html';
+        window.location.href='login.html';
     }
 }
 function redirectIfLoggedIn(){
