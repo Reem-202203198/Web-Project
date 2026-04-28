@@ -22,9 +22,9 @@ function clearAllErrors() {
 //Login form submit
 const loginForm = document.getElementById("login-form");
 
-loginForm.addEventListener("submit", function (e) {
+loginForm.addEventListener("submit", async function (e) {
   e.preventDefault();
-  
+
   clearAllErrors();
 
   const email = document.getElementById("email").value.trim();
@@ -45,21 +45,20 @@ loginForm.addEventListener("submit", function (e) {
 
   if (hasError) return;
 
-  //Find user by email
-  const user = getUserByEmail(email);
-
-  if (!user) {
-    showError("email", "No account found with this email.");
-    return;
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      showError("password", data.error);
+      return;
+    }
+    localStorage.setItem("currentUser", JSON.stringify(data));
+    window.location.href = "feed.html";
+  } catch (err) {
+    showError("password", "Something went wrong. Try again.");
   }
-
-  //  Check password
-  if (user.password !== password) {
-    showError("password", "Incorrect password.");
-    return;
-  }
-
-  //  Save session and redirect
-  setCurrentUser(user);
-  window.location.href = "feed.html";
 });
