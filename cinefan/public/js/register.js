@@ -33,7 +33,7 @@ function clearAllErrors() {
 
 const registerForm = document.getElementById("register-form");
 
-registerForm.addEventListener("submit", function (e) {
+registerForm.addEventListener("submit", async function (e) {
   e.preventDefault();
 
   clearAllErrors();
@@ -56,9 +56,6 @@ registerForm.addEventListener("submit", function (e) {
   } else if (!isValidEmail(email)) {
     showError("email", "Please enter a valid email address.");
     hasError = true;
-  } else if (getUserByEmail(email)) {
-    showError("email", "This email is already registered.");
-    hasError = true;
   }
 
   if (password === "") {
@@ -80,23 +77,22 @@ registerForm.addEventListener("submit", function (e) {
     hasError = true;
   }
 
-  if (hasError) return; 
+  if (hasError) return;
 
-  const newUser = {
-    id: generateId(),
-    username: username,
-    email: email,
-    password: password,
-    bio: "",
-    profilePicture: "",
-    following: [],
-    followers: [],
-  };
-
-  const users = getUsers();
-  users.push(newUser);
-  saveUsers(users);
-
-  alert("Account created successfully! Please log in.");
-  window.location.href = "login.html";
+  try {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      showError("email", data.error);
+      return;
+    }
+    alert("Account created successfully! Please log in.");
+    window.location.href = "login.html";
+  } catch (err) {
+    showError("email", "Something went wrong. Try again.");
+  }
 });
