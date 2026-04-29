@@ -1,4 +1,5 @@
 const currentUser=getCurrentUser();
+if (!currentUser) window.location.href = 'login.html';
 const params=new URLSearchParams(window.location.search);
 const profileId = params.get("id");
 let profileUser;
