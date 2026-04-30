@@ -40,7 +40,9 @@ if (miniImg) {
 /////////////////////////
 // format timestamp
 function formatTimestamp(timestamp) {
+  if (!timestamp) return '';
   const date = new Date(timestamp);
+  if (isNaN(date.getTime())) return '';
   return date.toLocaleString();
 }
 
@@ -133,7 +135,7 @@ function createPostCard(post, author) {
           <h4 class="post-author" data-user-id="${author.id}" style="cursor:pointer;">
             ${author.username}
           </h4>
-          <p>${formatTimestamp(post.timestamp)}</p>
+          <p>${formatTimestamp(post.createdAt)}</p>
         </div>
       </div>
 

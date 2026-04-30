@@ -4,6 +4,11 @@ if (!getCurrentUser()) window.location.href = 'login.html';
 const searchInput = document.getElementById('search-input');
 const searchResults = document.getElementById('search-results');
 const currentUser = getCurrentUser();
+const navbarQuery = new URLSearchParams(window.location.search).get('q');
+if (navbarQuery) {
+  searchInput.value = navbarQuery;
+  searchInput.dispatchEvent(new Event('input'));
+}
 
 // Logout button
 document.getElementById('logout-btn').addEventListener('click', function () {

@@ -12,12 +12,13 @@
       <div class="logo-text">CineFan</div>
 
       <div class="search-bar">
-        <input type="text" placeholder="Search movies, reviews, and users..." />
+        <input type="text" id="navbar-search" placeholder="Search movies, reviews, and users..." onkeydown="if(event.key==='Enter' && this.value.trim()) window.location.href='search.html?q='+encodeURIComponent(this.value.trim())" />
       </div>
 
       <nav class="main-nav">
         <a href="feed.html" class="active">Home</a>
         <a href="profile.html">Profile</a>
+        <a href="search.html">Search</a>
       </nav>
 
       <button id="logout-btn">Logout</button>
