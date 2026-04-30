@@ -347,83 +347,45 @@ function createPostCard(post, author) {
 }
 
 // Task 2: Load and display feed
-function loadFeed() {
-  const posts = getPosts();
-  const users = getUsers();
-
-  const followingIds = currentUser.following || [];
-
-  // Show followed users + current user's own posts
-  const feedPosts = posts
-    .filter(
-      (post) =>
-        followingIds.includes(post.userId) || post.userId === currentUser.id
-    )
-    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-  feedContainer.innerHTML = "";
-
-  if (feedPosts.length === 0) {
-    feedContainer.innerHTML = `
-      <div class="card">
-        <p style="color:#aaa;">Follow someone to see their posts!</p>
-      </div>
-    `;
-    return;
+async function loadFeed() {
+  feedContainer.innerHTML = '<p style="color:#aaa; text-align:center;">Loading...</p>';
+  try {
+    const res = await fetch(`/api/posts?userId=${currentUser.id}`);
+    const posts = await res.json();
+    feedContainer.innerHTML = '';
+    if (!posts.length) {
+      feedContainer.innerHTML = `<div class="card"><p style="color:#aaa;">Follow someone to see their posts!</p></div>`;
+      return;
+    }
+    posts.forEach(post => {
+      const postCard = createPostCard(post, post.author);
+      feedContainer.appendChild(postCard);
+    });
+  } catch (err) {
+    console.error('Failed to load feed:', err);
   }
-
-  feedPosts.forEach((post) => {
-    const author = users.find((user) => user.id === post.userId);
-
-    if (!author) return;
-
-    const postCard = createPostCard(post, author);
-    feedContainer.appendChild(postCard);
-  });
 }
 
 // Task 3: Create Post
-postBtn.addEventListener("click", function () {
+postBtn.addEventListener("click", async function () {
   const content = postInput.value.trim();
-
-  if (content === "") {
-    alert("Post content cannot be empty.");
+  if (content === '') {
+    alert('Post content cannot be empty.');
     return;
   }
-  const fileInput = document.getElementById("feed-image");
-  const file = fileInput ? fileInput.files[0] : null;
-  const newPost = {
-    id: generateId(),
-    userId: currentUser.id,
-    content: content,
-    image:"",
-    timestamp: new Date().toISOString(),
-    likes: [],
-    comments: []
-  };
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function () {
-      newPost.image = reader.result;
-
-      const posts = getPosts();
-      posts.push(newPost);
-      savePosts(posts);
-      loadFeed();
-    };
-    reader.readAsDataURL(file);
-    return;
+  try {
+    const res = await fetch('/api/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: currentUser.id, content })
+    });
+    const post = await res.json();
+    postInput.value = '';
+    const postCard = createPostCard(post, post.author);
+    feedContainer.prepend(postCard);
+  } catch (err) {
+    console.error('Failed to create post:', err);
   }
-
-  const posts = getPosts();
-  posts.push(newPost);
-  savePosts(posts);
-
-  // Clear input if user refreshes the page, we want to show the post they just created
-  postInput.value = "";
-
-  // Reload feed without page refresh
-  loadFeed();
 });
 
 // Task 4: Logout
