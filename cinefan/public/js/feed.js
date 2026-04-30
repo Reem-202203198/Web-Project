@@ -298,12 +298,28 @@ commentLink.addEventListener("click", function () {
     const commentEl = document.createElement('div');
     commentEl.style.padding = '8px 0';
     commentEl.style.borderBottom = '1px solid #2a2a2a';
-    commentEl.innerHTML = `
-      <strong>${comment.user.username}</strong>
-      <p style="margin:5px 0; color:#ddd;">${comment.text}</p>
-      <small style="color:#888;">${formatTimestamp(comment.createdAt)}</small>
+commentEl.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <strong>${comment.user.username}</strong>
+          <p style="margin:5px 0; color:#ddd;">${comment.text}</p>
+          <small style="color:#888;">${formatTimestamp(comment.createdAt)}</small>
+        </div>
+        ${comment.user.id === currentUser.id
+          ? `<button class="delete-comment-btn" style="background:none;border:none;color:red;cursor:pointer;">Delete</button>`
+          : ''}
+      </div>
     `;
     commentsList.appendChild(commentEl);
+
+    const deleteBtn = commentEl.querySelector('.delete-comment-btn');
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', async function () {
+        commentEl.remove();
+        const currentCount = parseInt(commentLink.textContent.replace('💬', '')) || 0;
+        commentLink.textContent = `💬${Math.max(0, currentCount - 1)}`;
+      });
+    }
 
     const currentCount = parseInt(commentLink.textContent.replace('💬', '')) || 0;
     commentLink.textContent = `💬${currentCount + 1}`;
