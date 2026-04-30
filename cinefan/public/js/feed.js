@@ -120,7 +120,7 @@ function createPostCard(post, author) {
   const postCard = document.createElement("article");
   postCard.className = "post-card card";
 
-  const isOwner = currentUser.id === post.userId;
+  const isOwner = currentUser.id === (post.authorId || post.userId);
   const likeCount = Array.isArray(post.likes) ? post.likes.length : 0;
   const commentCount = Array.isArray(post.comments) ? post.comments.length : 0;
 
@@ -129,7 +129,7 @@ function createPostCard(post, author) {
     <div class="post-head">
       <div class="post-user">
         <div class="post-avatar">
-          <img src="${getAvatar(getUserById(post.userId))}">
+          <img src="${getAvatar(post.author)}">
         </div>
         <div>
           <h4 class="post-author" data-user-id="${author.id}" style="cursor:pointer;">
@@ -273,78 +273,64 @@ function createPostCard(post, author) {
   }
 
 // Toggle comments section visibility when comment link is clicked 
-  commentLink.addEventListener("click", function () {
+commentLink.addEventListener("click", function () {
     if (commentsSection.style.display === "none") {
       commentsSection.style.display = "block";
-      renderComments();
     } else {
       commentsSection.style.display = "none";
     }
   });
 
  // Handle adding new comment when comment button is clicked
-  commentBtn.addEventListener("click", function () {
-    const text = commentInput.value.trim();
+  commentBtn.addEventListener("click", async function () {
+  const text = commentInput.value.trim();
+  if (text === '') return;
 
-    if (text === "") return;
-
-    const posts = getPosts();
-    const postIndex = posts.findIndex((p) => p.id === post.id);
-
-    if (postIndex === -1) return;
-
-    if (!Array.isArray(posts[postIndex].comments)) {
-      posts[postIndex].comments = [];
-    }
-
-    posts[postIndex].comments.push({
-      userId: currentUser.id,
-      text: text,
-      timestamp: new Date().toISOString()
+  try {
+    const res = await fetch(`/api/posts/${post.id}/comment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: currentUser.id, text })
     });
+    const comment = await res.json();
+    commentInput.value = '';
 
-    savePosts(posts);
+    const commentEl = document.createElement('div');
+    commentEl.style.padding = '8px 0';
+    commentEl.style.borderBottom = '1px solid #2a2a2a';
+    commentEl.innerHTML = `
+      <strong>${comment.user.username}</strong>
+      <p style="margin:5px 0; color:#ddd;">${comment.text}</p>
+      <small style="color:#888;">${formatTimestamp(comment.createdAt)}</small>
+    `;
+    commentsList.appendChild(commentEl);
 
-    commentInput.value = "";
-
-
-    const newCount = posts[postIndex].comments.length;
-    commentLink.textContent = ` ${newCount}`;
-
-   //to show the new comment immediately after adding without needing to click the comment link again, we call renderComments() here to update the comments section in real-time
-    renderComments();
-  });
+    const currentCount = parseInt(commentLink.textContent.replace('💬', '')) || 0;
+    commentLink.textContent = `💬${currentCount + 1}`;
+  } catch (err) {
+    console.error('Comment failed:', err);
+  }
+});
 // Handle post deletion when delete button is clicked (only visible to post owner)
   const likeBtn = postCard.querySelector(".like-btn");
   const likeCountEl = postCard.querySelector(".like-count");
 
-  likeBtn.addEventListener("click", function () {
-    let posts = getPosts();
-    let postIndex = posts.findIndex(p => p.id === post.id);
-
-    if (postIndex === -1) return;
-
-    if (!Array.isArray(posts[postIndex].likes)) {
-      posts[postIndex].likes = [];
-    }
-
-    let userId = currentUser.id;
-
-    if (posts[postIndex].likes.includes(userId)) {
-      posts[postIndex].likes =
-        posts[postIndex].likes.filter(id => id !== userId);
-    } else {
-      posts[postIndex].likes.push(userId);
-    }
-
-    savePosts(posts);
-
-    const updatedLikes = posts[postIndex].likes.length;
-    likeCountEl.textContent = updatedLikes;
-
-    likeBtn.textContent =
-      posts[postIndex].likes.includes(userId) ? "❤️ Liked" : "🤍 Like";
-  });
+  likeBtn.addEventListener("click", async function () {
+  try {
+    const res = await fetch(`/api/posts/${post.id}/like`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: currentUser.id })
+    });
+    const data = await res.json();
+    likeBtn.textContent = data.liked ? '❤️ Liked' : '🤍 Like';
+    const countRes = await fetch(`/api/posts/${post.id}`);
+    const updatedPost = await countRes.json();
+    likeCountEl.textContent = updatedPost._count.likes;
+  } catch (err) {
+    console.error('Like failed:', err);
+  }
+});
   return postCard;
 }
 
@@ -383,8 +369,7 @@ postBtn.addEventListener("click", async function () {
     });
     const post = await res.json();
     postInput.value = '';
-    const postCard = createPostCard(post, post.author);
-    feedContainer.prepend(postCard);
+    await loadFeed();
   } catch (err) {
     console.error('Failed to create post:', err);
   }

@@ -1,20 +1,18 @@
 import { hasLiked, likePost, unlikePost } from '@/lib/repository';
 
 export async function POST(request, { params }) {
+  const { id } = await params;
   try {
     const { userId } = await request.json();
-
     if (!userId) {
       return Response.json({ error: 'userId is required' }, { status: 400 });
     }
-
-    const alreadyLiked = await hasLiked(userId, params.id);
-
+    const alreadyLiked = await hasLiked(userId, id);
     if (alreadyLiked) {
-      await unlikePost(userId, params.id);
+      await unlikePost(userId, id);
       return Response.json({ liked: false });
     } else {
-      await likePost(userId, params.id);
+      await likePost(userId, id);
       return Response.json({ liked: true });
     }
   } catch (error) {

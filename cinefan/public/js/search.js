@@ -7,7 +7,9 @@ const currentUser = getCurrentUser();
 const navbarQuery = new URLSearchParams(window.location.search).get('q');
 if (navbarQuery) {
   searchInput.value = navbarQuery;
-  searchInput.dispatchEvent(new Event('input'));
+  setTimeout(() => {
+    searchInput.dispatchEvent(new Event('input'));
+  }, 100);
 }
 
 // Logout button
