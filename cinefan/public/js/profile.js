@@ -120,3 +120,100 @@ async function loadProfile() {
 }
 
 loadProfile();
+// ── Post button ──
+const postBtn = document.getElementById('post-btn');
+const postInput = document.getElementById('post-input');
+
+if (postBtn && postInput) {
+  postBtn.addEventListener('click', async function () {
+    const content = postInput.value.trim();
+    if (!content) return;
+    try {
+      await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: currentUser.id, content })
+      });
+      postInput.value = '';
+      location.reload();
+    } catch (err) {
+      console.error('Post failed:', err);
+    }
+  });
+}
+
+// ── Edit profile ──
+const editBtn = document.querySelector('.edit-btn');
+if (editBtn) {
+  editBtn.addEventListener('click', function () {
+    const newUsername = prompt('Enter new username:', currentUser.username);
+    if (!newUsername) return;
+    const newBio = prompt('Enter new bio:', '');
+    fetch(`/api/users/${currentUser.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: newUsername, bio: newBio })
+    }).then(() => {
+      localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, username: newUsername, bio: newBio }));
+      location.reload();
+    });
+  });
+}
+
+// ── Followers / Following list ──
+const followList = document.getElementById('follow-list');
+const statSpans = document.querySelectorAll('.profile-stats span');
+
+statSpans.forEach((span, index) => {
+  if (index === 1 || index === 2) {
+    span.style.cursor = 'pointer';
+    span.addEventListener('click', async function () {
+      const type = index === 1 ? 'followers' : 'following';
+      try {
+        const res = await fetch(`/api/users/${profileId}/follow?type=${type}`);
+        const list = await res.json();
+
+        if (!followList) return;
+
+        if (followList.style.display === 'block') {
+          followList.style.display = 'none';
+          return;
+        }
+
+        followList.innerHTML = '';
+        followList.style.display = 'block';
+        followList.style.cssText = `
+          display: block;
+          background: #1a1a1a;
+          border: 1px solid #333;
+          border-radius: 10px;
+          padding: 10px;
+          margin-top: 10px;
+          max-height: 200px;
+          overflow-y: auto;
+        `;
+
+        if (!list.length) {
+          followList.innerHTML = '<p style="color:#aaa;">No users found.</p>';
+          return;
+        }
+
+        list.forEach(user => {
+          const userEl = document.createElement('div');
+          userEl.style.cssText = 'display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #333; cursor:pointer;';
+          userEl.innerHTML = `
+            <img src="${user.profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" 
+              style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+            <span style="color:white;">${user.username}</span>
+          `;
+          userEl.addEventListener('click', () => {
+            window.location.href = `profile.html?id=${user.id}`;
+          });
+          followList.appendChild(userEl);
+        });
+      } catch (err) {
+        console.error('Follow list failed:', err);
+      }
+    });
+  }
+});
