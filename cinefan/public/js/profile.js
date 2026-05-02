@@ -116,6 +116,7 @@ async function loadProfile() {
   } catch (err) {
     console.error('Profile load error:', err);
   }
+  document.querySelector('main').style.visibility = 'visible';
 }
 
 loadProfile();
