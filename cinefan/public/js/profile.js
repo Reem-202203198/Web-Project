@@ -31,6 +31,16 @@ async function loadProfile() {
     if (h1) h1.textContent = profileUser.username;
     const usernameEl = document.querySelector('.username');
     if (usernameEl) usernameEl.textContent = '@' + profileUser.username;
+    // Show bio
+let bioEl = document.querySelector('.profile-bio');
+if (!bioEl) {
+  bioEl = document.createElement('p');
+  bioEl.className = 'profile-bio';
+  bioEl.style.cssText = 'color:#b9c0e0; font-size:0.9rem; margin-top:8px;';
+  const statsDiv = document.querySelector('.profile-stats');
+  if (statsDiv) statsDiv.parentNode.insertBefore(bioEl, statsDiv);
+}
+bioEl.textContent = profileUser.bio || '';
 
     // Stats
     const stats = document.querySelectorAll('.profile-stats span');
