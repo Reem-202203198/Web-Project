@@ -299,9 +299,11 @@ export async function createPost({ authorId, content, image }) {
 }
 
 // Delete a post (only by its owner)
-export async function deletePost(postId, userId) {
+export async function deletePost(postId) {
+  await prisma.like.deleteMany({ where: { postId } });
+  await prisma.comment.deleteMany({ where: { postId } });
   return await prisma.post.delete({
-    where: { id: postId, authorId: userId },
+    where: { id: postId },
   });
 }
 

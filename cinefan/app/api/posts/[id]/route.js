@@ -9,7 +9,6 @@ export async function GET(request, { params }) {
 
 export async function DELETE(request, { params }) {
   const { id } = await params;
-  const { userId } = await request.json();
-  await deletePost(id, userId);
+  await deletePost(id);
   return Response.json({ success: true });
 }

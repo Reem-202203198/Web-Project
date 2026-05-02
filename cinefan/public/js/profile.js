@@ -42,14 +42,14 @@ async function loadProfile() {
 
     // Hide/show buttons
     const editBtn = document.querySelector('.edit-btn');
-    if (editBtn) editBtn.style.display = currentUser.id === profileId ? '' : 'none';
+    if (editBtn) editBtn.style.display = String(currentUser.id) === String(profileId) ? '' : 'none';
     const createPostBox = document.querySelector('.create-post');
-    if (createPostBox) createPostBox.style.display = currentUser.id === profileId ? '' : 'none';
+    if (createPostBox) createPostBox.style.display = String(currentUser.id) === String(profileId) ? '' : 'none';
 
     // Follow button
     const followBtn = document.getElementById('follow-btn');
     if (followBtn) {
-      if (currentUser.id === profileId) {
+      if (String(currentUser.id) === String(profileId)) {
         followBtn.style.display = 'none';
       } else {
         const followRes = await fetch(`/api/users/${currentUser.id}/follow?type=following`);
@@ -92,7 +92,7 @@ async function loadProfile() {
       postEl.innerHTML = `
         <div class="post-header">
           <h4>${profileUser.username}</h4>
-          ${currentUser.id === profileId ? `<button class="delete-btn" data-id="${post.id}">Delete</button>` : ''}
+          ${String(currentUser.id) === String(profileId) ? `<button class="delete-btn" data-id="${post.id}">Delete</button>` : ''}
         </div>
         <p>${post.content}</p>
         ${post.image ? `<img src="${post.image}" style="width:100%; border-radius:10px; margin-top:10px;">` : ''}

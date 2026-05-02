@@ -120,7 +120,7 @@ function createPostCard(post, author) {
   const postCard = document.createElement("article");
   postCard.className = "post-card card";
 
-  const isOwner = currentUser.id === (post.authorId || post.userId);
+  const isOwner = String(currentUser.id) === String(post.author?.id || post.authorId || post.userId);
   const likeCount = Array.isArray(post.likes) ? post.likes.length : 0;
   const commentCount = Array.isArray(post.comments) ? post.comments.length : 0;
 
@@ -347,6 +347,22 @@ commentEl.innerHTML = `
     console.error('Like failed:', err);
   }
 });
+  const deleteBtn = postCard.querySelector(".delete-btn");
+if (deleteBtn) {
+  deleteBtn.addEventListener("click", async function () {
+    const postId = this.dataset.postId;
+    try {
+      await fetch(`/api/posts/${postId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: currentUser.id })
+      });
+      await loadFeed();
+    } catch (err) {
+      console.error('Delete failed:', err);
+    }
+  });
+}
   return postCard;
 }
 
