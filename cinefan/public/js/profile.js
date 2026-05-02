@@ -180,7 +180,7 @@ if (editProfileBtn) {
       </div>
       <div style="margin-bottom: 1.5rem;">
         <label style="display: block; color: #9ca3db; margin-bottom: 0.5rem;">Bio</label>
-        <textarea id="editBio" rows="3" style="width: 100%; padding: 0.75rem; background: #1a1d2b; border: 1px solid #2d2f3a; border-radius: 12px; color: white; font-size: 0.9rem; resize: vertical; box-sizing:border-box;"></textarea>
+        <textarea id="editBio" rows="3" style="width: 100%; padding: 0.75rem; background: #1a1d2b; border: 1px solid #2d2f3a; border-radius: 12px; color: white; font-size: 0.9rem; resize: vertical; box-sizing:border-box;">${currentUser.bio || ''}</textarea>
       </div>
       <div style="display: flex; gap: 1rem; justify-content: flex-end;">
         <button type="button" id="cancelBtn" style="padding: 0.6rem 1.4rem; background: #2d2f3a; border: none; border-radius: 40px; color: white; cursor: pointer;">Cancel</button>
