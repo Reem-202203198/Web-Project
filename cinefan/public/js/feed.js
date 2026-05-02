@@ -393,17 +393,31 @@ postBtn.addEventListener("click", async function () {
     alert('Post content cannot be empty.');
     return;
   }
-  try {
-    const res = await fetch('/api/posts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: currentUser.id, content })
-    });
-    const post = await res.json();
-    postInput.value = '';
-    await loadFeed();
-  } catch (err) {
-    console.error('Failed to create post:', err);
+
+  const imageFile = document.getElementById('feed-post-image')?.files[0];
+
+  const sendPost = async (imageData) => {
+    try {
+      await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: currentUser.id, content, image: imageData || '' })
+      });
+      postInput.value = '';
+      await loadFeed();
+    } catch (err) {
+      console.error('Failed to create post:', err);
+    }
+  };
+
+  if (imageFile) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      sendPost(reader.result);
+    };
+    reader.readAsDataURL(imageFile);
+  } else {
+    sendPost('');
   }
 });
 
