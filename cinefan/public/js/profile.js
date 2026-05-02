@@ -138,16 +138,31 @@ if (postBtn && postInput) {
   postBtn.addEventListener('click', async function () {
     const content = postInput.value.trim();
     if (!content) return;
-    try {
-      await fetch('/api/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: currentUser.id, content })
-      });
-      postInput.value = '';
-      location.reload();
-    } catch (err) {
-      console.error('Post failed:', err);
+
+    const imageFile = document.getElementById('post-image')?.files[0];
+
+    const sendPost = async (imageData) => {
+      try {
+        await fetch('/api/posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: currentUser.id, content, image: imageData || '' })
+        });
+        postInput.value = '';
+        location.reload();
+      } catch (err) {
+        console.error('Post failed:', err);
+      }
+    };
+
+    if (imageFile) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        sendPost(reader.result);
+      };
+      reader.readAsDataURL(imageFile);
+    } else {
+      sendPost('');
     }
   });
 }
