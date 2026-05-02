@@ -21,12 +21,10 @@ export async function getTotalLikes() {
 export async function getMostActiveUser() {
   return await prisma.user.findFirst({
     orderBy: {
-      posts: {
-        _count: "desc",
-      },
+      posts: { _count: "desc" },
     },
     include: {
-      posts: true,
+      _count: { select: { posts: true } },
     },
   });
 }
@@ -34,13 +32,31 @@ export async function getMostActiveUser() {
 export async function getMostLikedPost() {
   return await prisma.post.findFirst({
     orderBy: {
-      likes: {
-        _count: "desc",
-      },
+      likes: { _count: "desc" },
     },
     include: {
-      likes: true,
       author: true,
+      _count: { select: { likes: true, comments: true } },
+    },
+  });
+}
+
+export async function getAvgPostsPerUser() {
+  const [totalPosts, totalUsers] = await Promise.all([
+    prisma.post.count(),
+    prisma.user.count(),
+  ]);
+  return totalUsers > 0 ? (totalPosts / totalUsers).toFixed(2) : 0;
+}
+
+export async function getTopFollowedUsers() {
+  return await prisma.user.findMany({
+    take: 5,
+    orderBy: {
+      followers: { _count: "desc" },
+    },
+    include: {
+      _count: { select: { followers: true } },
     },
   });
 }

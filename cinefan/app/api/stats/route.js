@@ -5,6 +5,8 @@ import {
   getTotalLikes,
   getMostActiveUser,
   getMostLikedPost,
+  getAvgPostsPerUser,
+  getTopFollowedUsers,
 } from "@/lib/statsQueries";
 
 export async function GET() {
@@ -16,6 +18,8 @@ export async function GET() {
       totalLikes: await getTotalLikes(),
       mostActiveUser: await getMostActiveUser(),
       mostLikedPost: await getMostLikedPost(),
+      avgPostsPerUser: await getAvgPostsPerUser(),
+      topFollowedUsers: await getTopFollowedUsers(),
     };
 
     return Response.json(stats);
