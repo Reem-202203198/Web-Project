@@ -13,16 +13,8 @@ const postBtn = document.getElementById("feed-post-btn");
 const logoutBtn = document.getElementById("logout-btn");
 //////////////////////
 const topImg = document.querySelector(".top-avatar img");
-
 if (topImg) {
-  const user = getUserById(currentUser.id);
-  const avatar = getAvatar(user);
-
-  if (avatar) {
-    topImg.src = avatar;
-  } else {
-    topImg.style.display = "none";
-  }
+  topImg.src = currentUser.profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 }
 
 const miniImg = document.querySelector(".mini-avatar img");
