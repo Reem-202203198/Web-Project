@@ -12,19 +12,17 @@ const postInput = document.getElementById("feed-post-input");
 const postBtn = document.getElementById("feed-post-btn");
 const logoutBtn = document.getElementById("logout-btn");
 //////////////////////
-const topImg = document.querySelector(".top-avatar img");
-if (topImg) {
-  topImg.src = currentUser.profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-  // Fetch latest profile picture from API
-  fetch(`/api/users/${currentUser.id}`)
-    .then(r => r.json())
-    .then(user => {
-      if (user.profilePicture) {
-        topImg.src = user.profilePicture;
-        localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, profilePicture: user.profilePicture }));
-      }
-    });
-}
+fetch(`/api/users/${currentUser.id}`)
+  .then(r => r.json())
+  .then(user => {
+    const topImg = document.querySelector(".top-avatar img");
+    if (topImg) {
+      topImg.src = user.profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+    }
+    if (user.profilePicture) {
+      localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, profilePicture: user.profilePicture }));
+    }
+  });
 
 const miniImg = document.querySelector(".mini-avatar img");
 
