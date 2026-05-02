@@ -25,16 +25,12 @@ fetch(`/api/users/${currentUser.id}`)
   });
 
 const miniImg = document.querySelector(".mini-avatar img");
-
 if (miniImg) {
-  const user = getUserById(currentUser.id);
-  const avatar = getAvatar(user);
-
-  if (avatar) {
-    miniImg.src = avatar;
-  } else {
-    miniImg.style.display = "none";
-  }
+  fetch(`/api/users/${currentUser.id}`)
+    .then(r => r.json())
+    .then(user => {
+      miniImg.src = user.profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+    });
 }
 /////////////////////////
 // format timestamp
