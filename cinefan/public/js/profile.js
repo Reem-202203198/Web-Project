@@ -207,6 +207,10 @@ if (editProfileBtn) {
         <label style="display: block; color: #9ca3db; margin-bottom: 0.5rem;">Bio</label>
         <textarea id="editBio" rows="3" style="width: 100%; padding: 0.75rem; background: #1a1d2b; border: 1px solid #2d2f3a; border-radius: 12px; color: white; font-size: 0.9rem; resize: vertical; box-sizing:border-box;">${currentUser.bio || ''}</textarea>
       </div>
+      <div style="margin-bottom: 1.2rem;">
+  <label style="display: block; color: #9ca3db; margin-bottom: 0.5rem;">Profile Picture</label>
+  <input type="file" id="editImage" accept="image/*" style="color:white;">
+</div>
       <div style="display: flex; gap: 1rem; justify-content: flex-end;">
         <button type="button" id="cancelBtn" style="padding: 0.6rem 1.4rem; background: #2d2f3a; border: none; border-radius: 40px; color: white; cursor: pointer;">Cancel</button>
         <button type="button" id="saveBtn" style="padding: 0.6rem 1.4rem; background: linear-gradient(95deg, #4f46e5, #7c3aed); border: none; border-radius: 40px; color: white; cursor: pointer;">Save</button>
@@ -221,23 +225,36 @@ if (editProfileBtn) {
       const newBio = document.getElementById('editBio').value.trim();
       if (!newUsername) return;
 
-      try {
-        await fetch(`/api/users/${currentUser.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: newUsername, bio: newBio })
-        });
-        localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, username: newUsername, bio: newBio }));
+      const imageFile = document.getElementById('editImage')?.files[0];
 
-        const toast = document.createElement('div');
-        toast.textContent = 'Profile updated successfully!';
-        toast.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#1e1f2e; color:white; padding:0.75rem 1.5rem; border-radius:40px; border:1px solid #4f46e5; z-index:10000;';
-        document.body.appendChild(toast);
-        setTimeout(() => { toast.remove(); location.reload(); }, 1500);
+      const saveProfile = async (imageData) => {
+        try {
+          await fetch(`/api/users/${currentUser.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: newUsername, bio: newBio, profilePicture: imageData })
+          });
+          localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, username: newUsername, bio: newBio, profilePicture: imageData }));
 
-        modal.remove();
-      } catch (err) {
-        console.error('Edit failed:', err);
+          const toast = document.createElement('div');
+          toast.textContent = 'Profile updated successfully!';
+          toast.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#1e1f2e; color:white; padding:0.75rem 1.5rem; border-radius:40px; border:1px solid #4f46e5; z-index:10000;';
+          document.body.appendChild(toast);
+          setTimeout(() => { toast.remove(); location.reload(); }, 1500);
+          modal.remove();
+        } catch (err) {
+          console.error('Edit failed:', err);
+        }
+      };
+
+      if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          saveProfile(reader.result);
+        };
+        reader.readAsDataURL(imageFile);
+      } else {
+        saveProfile(currentUser.profilePicture || '');
       }
     });
 
